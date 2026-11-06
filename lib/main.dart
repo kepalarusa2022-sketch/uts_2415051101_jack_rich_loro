@@ -1,53 +1,28 @@
-// Student ID: 2415051101 - Jack Rich Loro
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'providers/course_provider.dart';
+import 'screens/main_navigation_screen.dart';
 
-import 'package:flutter_ui_fundamentals/services/course_supabase_service.dart';
-import 'package:flutter_ui_fundamentals/repositories/course_repository.dart';
-import 'package:flutter_ui_fundamentals/providers/course_provider.dart';
-import 'package:flutter_ui_fundamentals/screens/course_screen.dart';
-
-
-const String supabaseUrl = 'https://pugfdvhldusonayslhui.supabase.co/'; // Sesuaikan URL Supabase Anda
-const String supabaseAnonKey = 'sb_publishable_lklcxyhn_oRyj4P2B2ejOA_2Y8qRKZi'; 
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Inisialisasi Supabase
-  await Supabase.initialize(
-    url: supabaseUrl,
-    publishableKey: supabaseAnonKey,
-  );
-
-  // Menggunakan CourseSupabaseService untuk mengambil data dari database Supabase
-  final dataSource = CourseSupabaseService();
-  final courseRepository = CourseRepository(dataSource);
-
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => CourseProvider(courseRepository)..loadCourses(),
-      child: const CourseExplorerApp(),
-    ),
-  );
-  
+void main() {
+  runApp(const MyApp());
 }
 
-class CourseExplorerApp extends StatelessWidget {
-  const CourseExplorerApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Course Explorer v2',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => CourseProvider(),
+      child: MaterialApp(
+        title: 'Academic Course Scheduler',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          useMaterial3: true,
+        ),
+        home: const MainNavigationScreen(),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const CourseScreen(),
     );
   }
 }

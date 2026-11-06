@@ -1,102 +1,137 @@
-// Student ID: 2415051101 - Jack Rich Loro
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_ui_fundamentals/providers/course_provider.dart';
-import 'package:flutter_ui_fundamentals/widgets/course_card.dart';
-import 'package:flutter_ui_fundamentals/widgets/error_view.dart';
-import 'package:flutter_ui_fundamentals/screens/favorites_screen.dart';
-import 'package:flutter_ui_fundamentals/screens/add_course_screen.dart';
+import '../providers/course_provider.dart';
+import 'course_detail_screen.dart';
+import 'add_course_screen.dart';
 
-class CourseScreen extends StatelessWidget {
-  const CourseScreen({super.key});
+class CourseScreen extends StatefulWidget {
+  const CourseScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CourseScreen> createState() => _CourseScreenState();
+}
+
+class _CourseScreenState extends State<CourseScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Memuat data saat screen pertama kali dibuka
+    Future.microtask(() =>
+        Provider.of<CourseProvider>(context, listen: false).loadCourses());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final String studentName = "Jack Rich Loro";
-    final String studentId = "2415051101";
-
-    final provider = context.watch<CourseProvider>();
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('$studentId - $studentName'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite),
-            tooltip: 'Halaman Favorit',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
-                ),
-              );
-            },
-          ),
-        ],
+        title: const Text('Daftar Jadwal Kuliah'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Daftar Kursus (Favorites: ${provider.favorites.length})',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () => context.read<CourseProvider>().loadCourses(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Builder(
-                builder: (context) {
-                  if (provider.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+      body: Consumer<CourseProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                  if (provider.error != null) {
-                    return ErrorView(
-                      message: provider.error!,
-                      onRetry: () => context.read<CourseProvider>().loadCourses(),
+          if (provider.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text(
+                'Terjadi Kesalahan:\n${provider.errorMessage}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          }
+
+          if (provider.courses.isEmpty) {
+            return const Center(
+              child: Text(
+                'Belum ada jadwal kuliah.\nSilakan tambah jadwal baru!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            );
+          }
+
+          // Responsive Layout menggunakan LayoutBuilder
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              // Jika lebar layar lebar (Wide/Expanded)
+              if (constraints.maxWidth > 600) {
+                return GridView.builder(
+                  padding: const EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                  ),
+                  itemCount: provider.courses.length,
+                  itemBuilder: (context, index) {
+                    final course = provider.courses[index];
+                    return Card(
+                      elevation: 3,
+                      child: ListTile(
+                        title: Text(course.title,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text('${course.day} - ${course.time}'),
+                        trailing: Text('${course.credits} SKS'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CourseDetailScreen(course: course),
+                            ),
+                          );
+                        },
+                      ),
                     );
-                  }
+                  },
+                );
+              }
 
-                  if (provider.courses.isEmpty) {
-                    return const Center(child: Text('Data course belum tersedia'));
-                  }
-
-                  return ListView.builder(
-                    itemCount: provider.courses.length,
-                    itemBuilder: (context, index) {
-                      final course = provider.courses[index];
-                      return CourseCard(course: course);
-                    },
+              // Jika layar biasa/compact (ListView)
+              return ListView.builder(
+                itemCount: provider.courses.length,
+                itemBuilder: (context, index) {
+                  final course = provider.courses[index];
+                  return Card(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(course.credits.toString()),
+                      ),
+                      title: Text(course.title,
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text('Hari: ${course.day} | Jam: ${course.time}'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // Navigasi List -> Detail (Passing data)
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CourseDetailScreen(course: course),
+                          ),
+                        );
+                      },
+                    ),
                   );
                 },
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
-      // Tambahkan FloatingActionButton di sini agar tombol plus muncul
-  floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const AddCourseScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const AddCourseScreen()),
           );
         },
-        tooltip: 'Tambah Kursus',
         child: const Icon(Icons.add),
       ),
     );

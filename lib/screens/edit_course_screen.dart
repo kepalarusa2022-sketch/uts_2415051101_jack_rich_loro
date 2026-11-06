@@ -1,14 +1,12 @@
-// Student ID: 2415051101 - Jack Rich Loro
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_ui_fundamentals/models/course.dart';
-import 'package:flutter_ui_fundamentals/providers/course_provider.dart';
+import '../models/course.dart';
+import '../providers/course_provider.dart';
 
 class EditCourseScreen extends StatefulWidget {
-  final Course course;
+  final CourseModel course;
 
-  const EditCourseScreen({super.key, required this.course});
+  const EditCourseScreen({Key? key, required this.course}) : super(key: key);
 
   @override
   State<EditCourseScreen> createState() => _EditCourseScreenState();
@@ -16,65 +14,66 @@ class EditCourseScreen extends StatefulWidget {
 
 class _EditCourseScreenState extends State<EditCourseScreen> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _codeController;
+
   late TextEditingController _titleController;
+  late TextEditingController _dayController;
+  late TextEditingController _timeController;
+  late TextEditingController _roomController;
+  late TextEditingController _lecturerController;
   late TextEditingController _creditsController;
-  late String _status;
 
   @override
   void initState() {
     super.initState();
-    // Mengisi form dengan data lama kursus
-    _codeController = TextEditingController(text: widget.course.code);
+    // Mengisi data awal form dengan data mata kuliah yang mau diedit
     _titleController = TextEditingController(text: widget.course.title);
+    _dayController = TextEditingController(text: widget.course.day);
+    _timeController = TextEditingController(text: widget.course.time);
+    _roomController = TextEditingController(text: widget.course.room);
+    _lecturerController = TextEditingController(text: widget.course.lecturer);
     _creditsController = TextEditingController(text: widget.course.credits.toString());
-    _status = widget.course.status;
   }
 
   @override
   void dispose() {
-    _codeController.dispose();
     _titleController.dispose();
+    _dayController.dispose();
+    _timeController.dispose();
+    _roomController.dispose();
+    _lecturerController.dispose();
     _creditsController.dispose();
     super.dispose();
   }
 
-  void _submitData() async {
+  void _updateForm() {
     if (_formKey.currentState!.validate()) {
-      final updatedCourse = Course(
-        code: _codeController.text,
+      final updatedCourse = CourseModel(
+        id: widget.course.id,
         title: _titleController.text,
+        day: _dayController.text,
+        time: _timeController.text,
+        room: _roomController.text,
+        lecturer: _lecturerController.text,
         credits: int.parse(_creditsController.text),
-        status: _status,
       );
 
-      final provider = context.read<CourseProvider>();
-      final success = await provider.updateCourse(widget.course.code, updatedCourse);
+      // Karena di provider kita bisa tambahkan logika update atau replace, 
+      // kita perbarui data sesuai ID-nya
+      Provider.of<CourseProvider>(context, listen: false).removeCourse(widget.course.id);
+      Provider.of<CourseProvider>(context, listen: false).addNewCourse(updatedCourse);
 
-      if (!mounted) return;
-
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kursus berhasil diperbarui!')),
-        );
-        Navigator.pop(context);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal memperbarui kursus: ${provider.error}')),
-        );
-      }
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Jadwal kuliah berhasil diperbarui!')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<CourseProvider>();
-    const String studentId = "2415051101";
-    const String studentName = "Jack Rich Loro";
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('$studentId - $studentName'),
+        title: const Text('Edit Jadwal Kuliah'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -82,54 +81,53 @@ class _EditCourseScreenState extends State<EditCourseScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              const Text(
-                'Edit Kursus',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _codeController,
-                decoration: const InputDecoration(labelText: 'Kode Kursus (Read-Only)'),
-                readOnly: true, // Field code dibuat read-only sesuai instruksi
-              ),
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Judul Kursus'),
-                validator: (value) => value == null || value.isEmpty ? 'Judul wajib diisi' : null,
+                decoration: const InputDecoration(labelText: 'Nama Mata Kuliah'),
+                validator: (value) => value == null || value.isEmpty ? 'Nama mata kuliah harus diisi' : null,
               ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _dayController,
+                decoration: const InputDecoration(labelText: 'Hari'),
+                validator: (value) => value == null || value.isEmpty ? 'Hari harus diisi' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _timeController,
+                decoration: const InputDecoration(labelText: 'Jam'),
+                validator: (value) => value == null || value.isEmpty ? 'Jam harus diisi' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _roomController,
+                decoration: const InputDecoration(labelText: 'Ruangan'),
+                validator: (value) => value == null || value.isEmpty ? 'Ruangan harus diisi' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _lecturerController,
+                decoration: const InputDecoration(labelText: 'Nama Dosen Pengampu'),
+                validator: (value) => value == null || value.isEmpty ? 'Nama dosen harus diisi' : null,
+              ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _creditsController,
-                decoration: const InputDecoration(labelText: 'SKS (Credits)'),
+                decoration: const InputDecoration(labelText: 'Jumlah SKS'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'SKS wajib diisi';
+                  if (value == null || value.isEmpty) return 'SKS harus diisi';
                   if (int.tryParse(value) == null) return 'SKS harus berupa angka';
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                initialValue: _status,
-                decoration: const InputDecoration(labelText: 'Status'),
-                items: const [
-                  DropdownMenuItem(value: 'planned', child: Text('Planned')),
-                  DropdownMenuItem(value: 'active', child: Text('Active')),
-                  DropdownMenuItem(value: 'done', child: Text('Done')),
-                ],
-                onChanged: (value) {
-                  if (value != null) setState(() => _status = value);
-                },
-              ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: provider.isSaving ? null : _submitData,
-                child: provider.isSaving
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                      )
-                    : const Text('Simpan Perubahan'),
+                onPressed: _updateForm,
+                child: const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Text('Simpan Perubahan', style: TextStyle(fontSize: 16)),
+                ),
               ),
             ],
           ),

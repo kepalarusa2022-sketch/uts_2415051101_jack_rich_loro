@@ -1,33 +1,46 @@
-class Course {
-  final int? id;
-  final String code;
+class CourseModel {
+  final String id;
   final String title;
+  final String day;
+  final String time;
+  final String room;
+  final String lecturer;
   final int credits;
-  final String status;
 
-  const Course({
-    this.id,
-    required this.code,
+  CourseModel({
+    required this.id,
     required this.title,
+    required this.day,
+    required this.time,
+    required this.room,
+    required this.lecturer,
     required this.credits,
-    this.status = 'planned',
   });
 
-  factory Course.fromJson(Map<String, dynamic> json) {
-    return Course(
-      id: json['id'] as int?,
-      code: json['code'] as String,
-      title: json['title'] as String,
-      credits: json['credits'] as int,
-      status: (json['status'] as String?) ?? 'planned',
+  // Konversi dari JSON (Database Supabase) ke Objek Dart
+  factory CourseModel.fromJson(Map<String, dynamic> json) {
+    return CourseModel(
+      id: json['id'].toString(),
+      title: json['title'] ?? '',
+      day: json['day'] ?? '',
+      time: json['time'] ?? '',
+      room: json['room'] ?? '',
+      lecturer: json['lecturer'] ?? '',
+      credits: json['credits'] is int 
+          ? json['credits'] 
+          : int.tryParse(json['credits'].toString()) ?? 0,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        if (id != null) 'id': id,
-        'code': code,
-        'title': title,
-        'credits': credits,
-        'status': status,
-      };
+  // Konversi dari Objek Dart ke JSON (untuk simpan/update ke database)
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'day': day,
+      'time': time,
+      'room': room,
+      'lecturer': lecturer,
+      'credits': credits,
+    };
+  }
 }

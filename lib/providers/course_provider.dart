@@ -1,100 +1,53 @@
-// Student ID: 2415051101 - Jack Rich Loro
+import 'package:flutter/foundation.dart';
+import '../models/course.dart';
+import '../repositories/course_repository.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_ui_fundamentals/models/course.dart';
-import 'package:flutter_ui_fundamentals/repositories/course_repository.dart';
+class CourseProvider with ChangeNotifier {
+  final CourseRepository repository = CourseRepository();
 
-class CourseProvider extends ChangeNotifier {
-  final CourseRepository repository;
+  List<CourseModel> _courses = [];
+  bool _isLoading = false;
+  String _errorMessage = '';
 
-  CourseProvider(this.repository);
+  List<CourseModel> get courses => _courses;
+  bool get isLoading => _isLoading;
+  String get errorMessage => _errorMessage;
 
-  List<Course> courses = [];
-  bool isLoading = false;
-  String? error;
-  bool isSaving = false;
-  final Set<String> favorites = {};
-
+  // Fungsi untuk mengambil data
   Future<void> loadCourses() async {
-    isLoading = true;
-    error = null;
+    _isLoading = true;
+    _errorMessage = '';
     notifyListeners();
 
     try {
-      courses = await repository.getCourses();
+      _courses = await repository.getCourses();
     } catch (e) {
-      error = e.toString();
+      _errorMessage = e.toString();
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<bool> createCourse(Course course) async {
-    isSaving = true;
-    error = null;
-    notifyListeners();
-
+  // Fungsi untuk menambah data baru
+  Future<void> addNewCourse(CourseModel newCourse) async {
     try {
-      await repository.createCourse(course);
+      await repository.addCourse(newCourse);
       await loadCourses();
-      return true;
     } catch (e) {
-      error = e.toString();
-      return false;
-    } finally {
-      isSaving = false;
+      _errorMessage = e.toString();
       notifyListeners();
     }
   }
 
-  Future<bool> updateCourse(String id, Course course) async {
-    isSaving = true;
-    error = null;
-    notifyListeners();
-
-    try {
-      await repository.updateCourse(id, course);
-      await loadCourses();
-      return true;
-    } catch (e) {
-      error = e.toString();
-      return false;
-    } finally {
-      isSaving = false;
-      notifyListeners();
-    }
-  }
-
-  Future<bool> deleteCourse(String id) async {
-    isSaving = true;
-    error = null;
-    notifyListeners();
-
+  // Fungsi untuk menghapus data
+  Future<void> removeCourse(String id) async {
     try {
       await repository.deleteCourse(id);
-      favorites.remove(id);
       await loadCourses();
-      return true;
     } catch (e) {
-      error = e.toString();
-      return false;
-    } finally {
-      isSaving = false;
+      _errorMessage = e.toString();
       notifyListeners();
     }
-  }
-
-  bool isFavorite(String code) {
-    return favorites.contains(code);
-  }
-
-  void toggleFavorite(String code) {
-    if (favorites.contains(code)) {
-      favorites.remove(code);
-    } else {
-      favorites.add(code);
-    }
-    notifyListeners();
   }
 }

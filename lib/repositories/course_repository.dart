@@ -1,18 +1,26 @@
-// Student ID: 2415051101 - Jack Rich Loro
-
-import 'package:flutter_ui_fundamentals/models/course.dart';
-import 'package:flutter_ui_fundamentals/services/course_data_source.dart';
+import '../models/course.dart';
 
 class CourseRepository {
-  CourseRepository(this.dataSource);
+  // Sementara kita pakai list kosong dulu untuk testing UI nanti,
+  // sebelum disambungkan penuh ke Supabase.
+  final List<CourseModel> _dummyCourses = [];
 
-  final CourseDataSource dataSource;
+  // Mengambil daftar jadwal
+  Future<List<CourseModel>> getCourses() async {
+    // Simulasi delay jaringan (loading)
+    await Future.delayed(const Duration(seconds: 1));
+    return _dummyCourses;
+  }
 
-  Future<List<Course>> getCourses() => dataSource.getCourses();
+  // Menambah jadwal baru
+  Future<void> addCourse(CourseModel course) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    _dummyCourses.add(course);
+  }
 
-  Future<Course> createCourse(Course course) => dataSource.createCourse(course);
-
-  Future<void> updateCourse(String id, Course course) => dataSource.updateCourse(id, course);
-
-  Future<void> deleteCourse(String id) => dataSource.deleteCourse(id);
+  // Menghapus jadwal
+  Future<void> deleteCourse(String id) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    _dummyCourses.removeWhere((course) => course.id == id);
+  }
 }
