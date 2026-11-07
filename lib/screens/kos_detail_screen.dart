@@ -1,8 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/kos_model.dart';
 import '../providers/kos_provider.dart';
 import '../widgets/status_badge.dart';
+import 'add_edit_kos_screen.dart';
 import 'add_saved_kos_screen.dart';
 
 class KosDetailScreen extends StatefulWidget {
@@ -110,6 +111,22 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
                       ),
                     ),
                     actions: [
+                      CircleAvatar(
+                        backgroundColor: Colors.white.withValues(alpha: 0.9),
+                        child: IconButton(
+                          icon: const Icon(Icons.edit_note_rounded, color: Color(0xFF1BAA56), size: 22),
+                          tooltip: 'Edit Data Kos',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddEditKosScreen(kosToEdit: kos),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
                       CircleAvatar(
                         backgroundColor: Colors.white.withValues(alpha: 0.9),
                         child: IconButton(
@@ -295,6 +312,43 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 12),
+
+        // Tombol Edit Data Kos
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddEditKosScreen(kosToEdit: kos),
+              ),
+            );
+          },
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE8F8EE),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color(0xFFC8E6C9)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.edit_note_rounded, size: 18, color: Color(0xFF008744)),
+                SizedBox(width: 6),
+                Text(
+                  'Edit Data Kos Ini',
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF008744),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
 
         const Divider(height: 32),

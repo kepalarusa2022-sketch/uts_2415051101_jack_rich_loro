@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/kos_model.dart';
 import '../providers/kos_provider.dart';
@@ -7,6 +7,7 @@ import '../widgets/category_item.dart';
 import '../widgets/city_card.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/status_badge.dart';
+import 'add_edit_kos_screen.dart';
 import 'kos_detail_screen.dart';
 import 'kos_list_screen.dart';
 
@@ -60,6 +61,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddEditKosScreen(),
+            ),
+          );
+        },
+        backgroundColor: const Color(0xFF1BAA56),
+        icon: const Icon(Icons.add_home_work_rounded, color: Colors.white),
+        label: const Text(
+          'Tambah Kos',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           color: const Color(0xFF1BAA56),
@@ -110,6 +130,42 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const Spacer(),
+                          // Tombol Tambah Kos Baru
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AddEditKosScreen(),
+                                ),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.22),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.white70, width: 1),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const [
+                                  Icon(Icons.add_circle_outline, color: Colors.white, size: 16),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'Tambah Kos',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
                           // Notifikasi Bell dengan badge 99
                           Stack(
                             clipBehavior: Clip.none,

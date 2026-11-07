@@ -132,6 +132,29 @@ class KosProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ===================== KOS CATALOG CRUD METHODS =====================
+
+  /// [CREATE] Tambah Kos baru ke katalog
+  void addKos(KosModel kos) {
+    _allKos.insert(0, kos);
+    _applyFilters();
+  }
+
+  /// [UPDATE] Edit data Kos di katalog
+  void updateKos(KosModel kos) {
+    final index = _allKos.indexWhere((k) => k.id == kos.id);
+    if (index != -1) {
+      _allKos[index] = kos;
+      _applyFilters();
+    }
+  }
+
+  /// [DELETE] Hapus Kos dari katalog
+  void deleteKos(String id) {
+    _allKos.removeWhere((k) => k.id == id);
+    _applyFilters();
+  }
+
   // ===================== DATABASE CRUD METHODS =====================
 
   /// [READ] Ambil data catatan/favorit dari database

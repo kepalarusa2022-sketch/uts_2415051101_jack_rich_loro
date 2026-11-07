@@ -6,6 +6,7 @@ import '../widgets/custom_search_bar.dart';
 import '../widgets/empty_state_widget.dart';
 import '../widgets/error_state_widget.dart';
 import '../widgets/kos_card.dart';
+import 'add_edit_kos_screen.dart';
 import 'kos_detail_screen.dart';
 
 class KosListScreen extends StatefulWidget {
@@ -83,6 +84,16 @@ class _KosListScreenState extends State<KosListScreen> {
           ],
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline, color: Colors.white),
+            tooltip: 'Tambah Kos Baru',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddEditKosScreen()),
+              );
+            },
+          ),
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -127,6 +138,24 @@ class _KosListScreenState extends State<KosListScreen> {
           ),
           const SizedBox(width: 6),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddEditKosScreen()),
+          );
+        },
+        backgroundColor: const Color(0xFF1BAA56),
+        icon: const Icon(Icons.add_home_work_rounded, color: Colors.white),
+        label: const Text(
+          'Tambah Kos',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+        ),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
