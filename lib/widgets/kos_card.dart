@@ -1,7 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/kos_model.dart';
 import '../providers/kos_provider.dart';
+import '../screens/add_edit_kos_screen.dart';
 import 'status_badge.dart';
 
 class KosCard extends StatelessWidget {
@@ -95,6 +96,35 @@ class KosCard extends StatelessWidget {
                           ),
                         );
                       },
+                    ),
+                  ),
+                ),
+                // Tombol Edit Kos Cepat
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Material(
+                    color: Colors.white.withValues(alpha: 0.9),
+                    shape: const CircleBorder(),
+                    elevation: 2,
+                    child: InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddEditKosScreen(kosToEdit: kos),
+                          ),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(6),
+                        child: Icon(
+                          Icons.edit_rounded,
+                          color: Color(0xFF1BAA56),
+                          size: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),

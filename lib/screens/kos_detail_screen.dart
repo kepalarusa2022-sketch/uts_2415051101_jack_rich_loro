@@ -48,45 +48,140 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
 
           if (isWide) {
             // Tablet / Desktop Wide Layout (Side-by-side)
-            return Row(
+            return Column(
               children: [
-                Expanded(
-                  flex: 5,
-                  child: Stack(
+                // Top Header Bar Desktop / Wide Screen
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Row(
                     children: [
-                      Container(
-                        color: Colors.black12,
-                        child: Center(
-                          child: Image.network(
-                            gallery[_selectedImageIndex],
-                            fit: BoxFit.cover,
-                            height: double.infinity,
-                            width: double.infinity,
-                            errorBuilder: (ctx, err, stack) => const Center(
-                              child: Icon(Icons.apartment, size: 80, color: Color(0xFF1BAA56)),
-                            ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.black87),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          kos.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 40,
-                        left: 20,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back, color: Colors.black87),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                      // Tombol Edit Kos
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEditKosScreen(kosToEdit: kos),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.edit_note_rounded, size: 18),
+                        label: const Text('Edit Data Kos', style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber.shade700,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
+                      ),
+                      const SizedBox(width: 10),
+                      // Tombol Tambah Kos Baru
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddEditKosScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.add_home_work_rounded, size: 18),
+                        label: const Text('+ Tambah Kos Baru', style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF1BAA56),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        icon: Icon(
+                          isSaved ? Icons.favorite : Icons.favorite_border,
+                          color: isSaved ? Colors.red : Colors.grey.shade700,
+                        ),
+                        onPressed: () async {
+                          await kosProvider.toggleWishlist(kos);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  isSaved
+                                      ? 'Dihapus dari Wishlist'
+                                      : 'Disimpan ke Wishlist & Catatan',
+                                ),
+                                duration: const Duration(seconds: 1),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
                 ),
                 Expanded(
-                  flex: 6,
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(24),
-                    child: _buildDetailContent(context, kos, isSaved, kosProvider),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          color: Colors.black12,
+                          child: Center(
+                            child: Image.network(
+                              gallery[_selectedImageIndex],
+                              fit: BoxFit.cover,
+                              height: double.infinity,
+                              width: double.infinity,
+                              errorBuilder: (ctx, err, stack) => const Center(
+                                child: Icon(Icons.apartment, size: 80, color: Color(0xFF1BAA56)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                padding: const EdgeInsets.all(24),
+                                child: _buildDetailContent(context, kos, isSaved, kosProvider),
+                              ),
+                            ),
+                            // Persistent bottom action bar in wide mode!
+                            _buildBottomActionBar(context, kos, isSaved),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -249,6 +344,82 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // ==================== PANEL KELOLA KOS (EDIT & TAMBAH) ====================
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 18),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF1F8F3),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFB9E5C5), width: 1.5),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: const [
+                  Icon(Icons.dashboard_customize_rounded, color: Color(0xFF008744), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Kelola & Manajemen Kos:',
+                    style: TextStyle(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF008744),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddEditKosScreen(kosToEdit: kos),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.edit_note_rounded, size: 20),
+                    label: const Text('Edit Data Kos Ini', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.amber.shade800,
+                      foregroundColor: Colors.white,
+                      elevation: 1,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddEditKosScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add_home_work_rounded, size: 20),
+                    label: const Text('+ Tambah Kos Baru', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1BAA56),
+                      foregroundColor: Colors.white,
+                      elevation: 1,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
         // Badges Row
         Row(
           children: [
@@ -580,7 +751,7 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
                 Text(
                   _formatPrice(kos.price),
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF008744),
                   ),
@@ -591,7 +762,28 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
                 ),
               ],
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 10),
+
+            // Tombol Edit Kos Cepat
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddEditKosScreen(kosToEdit: kos),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.edit_note_rounded, size: 18),
+              label: const Text('Edit', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5)),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.amber.shade900,
+                side: BorderSide(color: Colors.amber.shade700, width: 1.5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            const SizedBox(width: 8),
 
             // Tombol Simpan Catatan / Ke Database
             Expanded(
@@ -607,7 +799,7 @@ class _KosDetailScreenState extends State<KosDetailScreen> {
                 icon: const Icon(Icons.bookmark_add_outlined, size: 18),
                 label: const Text(
                   'Simpan / Catat',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1BAA56),
