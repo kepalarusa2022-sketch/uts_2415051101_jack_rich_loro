@@ -71,6 +71,9 @@ Aplikasi mobile pencarian dan manajemen catatan kos berbasis Flutter yang terins
    - Fitur sinkronisasi data manual (trigger API & database reload).
 8. **Live Chat Helpdesk & Pengelola**:
    - Simulasi percakapan realtime dengan customer care KosFinder dan pemilik kos.
+9. **Formulir Tambah & Edit Kos Baru (Katalog & Listing CRUD)**:
+   - Formulir lengkap untuk mempublikasikan kos baru ke katalog atau mengedit informasi listing kos (nama, tipe, harga sewa, alamat, kota, fasilitas, ukuran kamar, gambar, deskripsi, dan kontak pengelola).
+   - Tombol akses cepat: Floating Action Button di Home dan Katalog, tombol di header AppBar, serta tombol "Edit Informasi Kos Ini" pada layar Detail Kos.
 
 ---
 
@@ -104,6 +107,7 @@ lib/
 │   ├── home_screen.dart          # Layar Dashboard / Explore (Sesuai foto desain)
 │   ├── kos_list_screen.dart      # Layar Katalog & Pencarian Kos (Sesuai foto desain)
 │   ├── kos_detail_screen.dart    # Layar Detail Kos dengan passing data
+│   ├── add_edit_kos_screen.dart  # Layar Tambah & Edit Kos ke Katalog
 │   ├── add_saved_kos_screen.dart # Layar Form Tambah Catatan (Create)
 │   ├── edit_saved_kos_screen.dart# Layar Form Edit Catatan (Update)
 │   ├── saved_kos_screen.dart     # Layar Wishlist & Catatan Database (Read & Delete)
@@ -164,7 +168,7 @@ Screen tidak pernah melakukan HTTP query atau database query secara langsung, me
 
 | Komponen | Spesifikasi Minimum | Implementasi pada KosFinder | Status |
 | :--- | :--- | :--- | :---: |
-| **Screen Fungsional** | Minimal 6 screen | 8 screen fungsional (Home, Catalog, Detail, Add, Edit, Wishlist, Profile, Chat) | ✅ Terpenuhi |
+| **Screen Fungsional** | Minimal 6 screen | 9 screen fungsional (Home, Catalog, Detail, Add/Edit Kos, Add Note, Edit Note, Wishlist, Profile, Chat) | ✅ Terpenuhi |
 | **Dart Model** | Minimal 2 model | `KosModel` dan `SavedKosModel` dengan serialisasi JSON lengkap | ✅ Terpenuhi |
 | **Reusable Widget** | Minimal 3 custom widget | 8 widget kustom (`KosCard`, `CustomSearchBar`, `CategoryItem`, `CityCard`, `StatusBadge`, `BannerSlider`, `EmptyStateWidget`, `ErrorStateWidget`) | ✅ Terpenuhi |
 | **Responsive Layout** | Minimal 2 kondisi | Compact (<600px) 2 kolom grid, Wide (>=600px) 4 kolom grid & side-by-side detail | ✅ Terpenuhi |
