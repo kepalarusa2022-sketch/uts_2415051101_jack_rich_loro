@@ -1,0 +1,293 @@
+{
+  "status": "success",
+  "message": "Data kos berhasil diambil",
+  "data": [
+    {
+      "id": "kos_001",
+      "name": "Kost Wisma Divina Sejahtera",
+      "type": "Campur",
+      "price": 2540000,
+      "price_unit": "/bln",
+      "address": "Jl. Kaliurang KM 5.2, Sleman, D.I. Yogyakarta",
+      "city": "Yogyakarta",
+      "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.9,
+      "review_count": 48,
+      "is_can_booking": true,
+      "room_size": "3 x 4 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "AC Dingin",
+        "WiFi Cepat 50 Mbps",
+        "Kasur Springbed Queen",
+        "Lemari Pakaian 2 Pintu",
+        "Meja Belajar & Kursi",
+        "Water Heater",
+        "Parkir Motor & Mobil Luas",
+        "Dapur Bersama",
+        "CCTV 24 Jam"
+      ],
+      "description": "Kost modern eksklusif dengan lingkungan asri dan tenang di Sleman, sangat dekat dengan kampus ternama (UGM, UNY). Fasilitas lengkap, kamar bersih dan terawat, keamanan 24 jam dengan smart lock dan CCTV.",
+      "rules": [
+        "Akses gerbang 24 jam dengan kartu akses",
+        "Tamu lawan jenis dilarang masuk kamar",
+        "Dilarang merokok di dalam kamar",
+        "Menjaga kebersihan dan ketenangan"
+      ],
+      "owner_name": "Ibu Divina",
+      "owner_phone": "+6281234567801"
+    },
+    {
+      "id": "kos_002",
+      "name": "Kost Ibu Lilis, Sleman",
+      "type": "Campur",
+      "price": 2540000,
+      "price_unit": "/bln",
+      "address": "Jl. Ring Road Utara, Condongcatur, Sleman, Yogyakarta",
+      "city": "Yogyakarta",
+      "image_url": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.8,
+      "review_count": 35,
+      "is_can_booking": true,
+      "room_size": "3.5 x 4 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "AC Dingin",
+        "WiFi Gratis",
+        "Kasur Mewah",
+        "Lemari Kayu",
+        "Parkir Mobil",
+        "Ruang Tamu Bersama"
+      ],
+      "description": "Kost idaman dengan suasana homey dan kekeluargaan. Dikelola langsung oleh Ibu Lilis dengan keramahan istimewa. Dekat minimarket, rumah makan, dan halte Trans Jogja.",
+      "rules": [
+        "Jam malam pukul 23:00 WIB untuk tamu",
+        "Dilarang membawa hewan peliharaan",
+        "Wajib lapor jika ada tamu menginap"
+      ],
+      "owner_name": "Ibu Lilis",
+      "owner_phone": "+6281234567802"
+    },
+    {
+      "id": "kos_003",
+      "name": "Kost Putri Cantika Pogung",
+      "type": "Putri",
+      "price": 1850000,
+      "price_unit": "/bln",
+      "address": "Pogung Baru Blok F, Pogung Lor, Sleman, Yogyakarta",
+      "city": "Yogyakarta",
+      "image_url": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.9,
+      "review_count": 62,
+      "is_can_booking": true,
+      "room_size": "3 x 3.5 m",
+      "is_electric_included": false,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "AC",
+        "WiFi High Speed",
+        "Springbed",
+        "Meja Belajar",
+        "Dapur & Kulkas Bersama",
+        "Penjaga Kos 24 Jam"
+      ],
+      "description": "Kost khusus mahasiswi dan karyawati dengan lingkungan aman, bersih, dan nyaman. Lokasi sangat strategis hanya 5 menit jalan kaki ke UGM.",
+      "rules": [
+        "Khusus Putri / Mahasiswi / Karyawati",
+        "Laki-laki dilarang masuk area kamar",
+        "Gerbang ditutup pukul 22:30 WIB"
+      ],
+      "owner_name": "Bapak Bambang",
+      "owner_phone": "+6281234567803"
+    },
+    {
+      "id": "kos_004",
+      "name": "Kost Putra Mahasiswa Seturan",
+      "type": "Putra",
+      "price": 1450000,
+      "price_unit": "/bln",
+      "address": "Jl. Seturan Raya No. 12, Depok, Sleman, Yogyakarta",
+      "city": "Yogyakarta",
+      "image_url": "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.7,
+      "review_count": 29,
+      "is_can_booking": true,
+      "room_size": "3 x 3 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "Kipas Angin / AC",
+        "WiFi",
+        "Kasur",
+        "Lemari",
+        "Parkir Motor Luas",
+        "Bebas Jam Malam"
+      ],
+      "description": "Kost putra lokasi pusat kuliner Seturan. Dekat UPN Veteran, YKPN, Atma Jaya. Bebas jam malam, akses kunci masing-masing penghuni.",
+      "rules": [
+        "Khusus Putra",
+        "Dilarang membawa obat terlarang",
+        "Jaga ketertiban bersama"
+      ],
+      "owner_name": "Mas Hendra",
+      "owner_phone": "+6281234567804"
+    },
+    {
+      "id": "kos_005",
+      "name": "Kost Griya Melati Asri Denpasar",
+      "type": "Campur",
+      "price": 1750000,
+      "price_unit": "/bln",
+      "address": "Jl. Tukad Badung No. 88, Renon, Denpasar Selatan, Bali",
+      "city": "Bali",
+      "image_url": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.9,
+      "review_count": 41,
+      "is_can_booking": true,
+      "room_size": "4 x 4 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "AC",
+        "Balkon Pribadi",
+        "WiFi Cepat",
+        "Kasur Queen Size",
+        "Dapur Mini",
+        "Taman Tropis"
+      ],
+      "description": "Hunian kos asri bernuansa villa tropis Bali di pusat kota Denpasar. Cocok untuk mahasiswa Universitas Udayana, Undiksha perwakilan Denpasar, dan pekerja profesional.",
+      "rules": [
+        "Akses bebas 24 jam",
+        "Menghormati adat dan budaya Bali",
+        "Dilarang membuat kegaduhan larut malam"
+      ],
+      "owner_name": "Wayan Sukadana",
+      "owner_phone": "+6281234567805"
+    },
+    {
+      "id": "kos_006",
+      "name": "Kost Cilandak Residence Exclusive",
+      "type": "Campur",
+      "price": 3200000,
+      "price_unit": "/bln",
+      "address": "Jl. Cilandak Barat No. 45, Jakarta Selatan",
+      "city": "Jabodetabek",
+      "image_url": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.9,
+      "review_count": 55,
+      "is_can_booking": true,
+      "room_size": "4 x 5 m",
+      "is_electric_included": false,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "Water Heater",
+        "Smart TV",
+        "AC Inverter",
+        "WiFi 100 Mbps",
+        "Laundry Service",
+        "Cleaning Service Mingguan"
+      ],
+      "description": "Kost eksklusif dekat stasiun MRT Fatmawati dan Cilandak Town Square. Sangat cocok bagi pekerja kantoran SCBD dan TB Simatupang.",
+      "rules": [
+        "Akses kartu pintar 24 jam",
+        "Tamu wajib lapor security",
+        "Dilarang membawa hewan peliharaan"
+      ],
+      "owner_name": "Pak Hartono",
+      "owner_phone": "+6281234567806"
+    },
+    {
+      "id": "kos_007",
+      "name": "Kost Putri Dago Asri Heritage",
+      "type": "Putri",
+      "price": 1950000,
+      "price_unit": "/bln",
+      "address": "Jl. Ir. H. Juanda No. 192, Dago, Bandung",
+      "city": "Bandung",
+      "image_url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.8,
+      "review_count": 39,
+      "is_can_booking": true,
+      "room_size": "3.5 x 3.5 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "Air Panas",
+        "WiFi",
+        "Kasur Nyaman",
+        "Udara Sejuk Dago",
+        "Dapur Bersama",
+        "Security 24 Jam"
+      ],
+      "description": "Kost putri nyaman dengan hawa sejuk khas Dago Atas. Dekat dengan kampus ITB dan Unpad Dipatiukur.",
+      "rules": [
+        "Khusus Mahasiswi dan Karyawati",
+        "Pukul 22:00 gerbang dikunci",
+        "Dilarang merokok"
+      ],
+      "owner_name": "Ibu Ratna",
+      "owner_phone": "+6281234567807"
+    },
+    {
+      "id": "kos_008",
+      "name": "Kost Surabaya Gubeng Harmoni",
+      "type": "Campur",
+      "price": 1600000,
+      "price_unit": "/bln",
+      "address": "Jl. Dharmawangsa No. 24, Gubeng, Surabaya",
+      "city": "Surabaya",
+      "image_url": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&auto=format&fit=crop&q=80"
+      ],
+      "rating": 4.7,
+      "review_count": 27,
+      "is_can_booking": true,
+      "room_size": "3 x 4 m",
+      "is_electric_included": true,
+      "facilities": [
+        "Kamar Mandi Dalam",
+        "AC Dingin",
+        "WiFi",
+        "Meja Belajar",
+        "Lemari",
+        "Parkir Mobil & Motor"
+      ],
+      "description": "Dekat Stasiun Gubeng dan Kampus Unair A & B. Sangat strategis untuk mahasiswa kedokteran dan karyawan.",
+      "rules": [
+        "Akses 24 jam",
+        "Menjaga kebersihan bersama",
+        "Tamu tidak boleh menginap tanpa izin"
+      ],
+      "owner_name": "Bapak Anton",
+      "owner_phone": "+6281234567808"
+    }
+  ]
+}
