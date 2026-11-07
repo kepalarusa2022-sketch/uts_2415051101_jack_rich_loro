@@ -10,7 +10,7 @@ Aplikasi mobile pencarian dan manajemen catatan kos berbasis Flutter yang terins
 
 ---
 
-## 📌 Identitas Mahasiswa & Pengumpulan UTS
+## Identitas Mahasiswa & Pengumpulan UTS
 
 | Informasi | Keterangan |
 | :--- | :--- |
@@ -28,7 +28,7 @@ Aplikasi mobile pencarian dan manajemen catatan kos berbasis Flutter yang terins
 
 ---
 
-## 📱 Ringkasan Fitur Aplikasi
+## Ringkasan Fitur Aplikasi
 
 1. **Dashboard / Explore Screen (Mamikos-Style UI)**:
    - Header hijau khas Mamikos dengan logo `mamikos.com`, avatar pengguna, dan notifikasi badge (99+).
@@ -77,7 +77,7 @@ Aplikasi mobile pencarian dan manajemen catatan kos berbasis Flutter yang terins
 
 ---
 
-## 🏗️ Struktur Arsitektur Aplikasi (Separation of Concerns)
+##  Struktur Arsitektur Aplikasi (Separation of Concerns)
 
 Project mengimplementasikan arsitektur berjenjang yang memisahkan tampilan, state management, repository, dan sumber data:
 
@@ -123,7 +123,7 @@ Screen tidak pernah melakukan HTTP query atau database query secara langsung, me
 
 ---
 
-## 🌐 Integrasi REST API
+## Integrasi REST API
 
 - **Metode HTTP**: `GET`
 - **Fungsi**: Mengambil katalog listing kos, rekomendasi kamar, harga, fasilitas, dan detail lokasi wilayah.
@@ -134,7 +134,7 @@ Screen tidak pernah melakukan HTTP query atau database query secara langsung, me
 
 ---
 
-## 🗄️ Backend & Database (Supabase PostgreSQL)
+## Backend & Database (Supabase PostgreSQL)
 
 - **Database**: Supabase / PostgreSQL.
 - **Tabel Utama**: `saved_kos`
@@ -164,7 +164,7 @@ Screen tidak pernah melakukan HTTP query atau database query secara langsung, me
 
 ---
 
-## 📋 Minimum Requirement Checklist (Kesesuaian Spesifikasi UTS)
+## Minimum Requirement Checklist (Kesesuaian Spesifikasi UTS)
 
 | Komponen | Spesifikasi Minimum | Implementasi pada KosFinder | Status |
 | :--- | :--- | :--- | :---: |
@@ -186,7 +186,7 @@ Screen tidak pernah melakukan HTTP query atau database query secara langsung, me
 
 ---
 
-## 🚀 Cara Menjalankan Project
+## Cara Menjalankan Project
 
 ### Prasyarat:
 - Flutter SDK versi 3.13 ke atas (direkomendasikan Flutter 3.24 / 3.47).
