@@ -43,7 +43,13 @@ class _LoginPageState extends State<LoginPage> {
       );
     } on AuthException catch (e) {
       // Password salah / email belum terdaftar -> "Invalid login credentials"
-      _showMessage(e.message);
+      if (e.message.toLowerCase().contains('invalid login credentials')) {
+        _showMessage(
+          'Akun belum terdaftar atau password salah. Silakan klik "Belum punya akun? Register" di bawah.',
+        );
+      } else {
+        _showMessage(e.message);
+      }
     } catch (_) {
       _showMessage('Terjadi kesalahan. Periksa koneksi internet Anda.');
     } finally {
@@ -137,8 +143,37 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(builder: (_) => const RegisterPage()),
                   ),
                   child: const Text(
-                    'Belum punya akun? Register',
-                    style: TextStyle(color: Color(0xFF1BAA56)),
+                    'Belum punya akun? Register di sini',
+                    style: TextStyle(
+                      color: Color(0xFF1BAA56),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Row(
+                  children: [
+                    Expanded(child: Divider()),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Text('ATAU', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                    ),
+                    Expanded(child: Divider()),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const HomePage()),
+                      (route) => false,
+                    );
+                  },
+                  icon: const Icon(Icons.flash_on, color: Colors.orange),
+                  label: const Text('Masuk Langsung (Mode Demo / Bypass)'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
               ],

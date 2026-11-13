@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   late Future<UserProfile?> _profileFuture;
   late Future<List<Map<String, dynamic>>> _kosFuture;
   final KosService _kosService = KosService();
+  String? _overrideRole;
 
   @override
   void initState() {
@@ -266,16 +267,21 @@ class _HomePageState extends State<HomePage> {
 
         final p = snap.data ??
             UserProfile(
-              id: myUid ?? '',
-              email: Supabase.instance.client.auth.currentUser?.email ?? '-',
-              name: 'Pengguna',
-              role: 'seeker',
+              id: myUid ?? 'demo-user-id',
+              email: Supabase.instance.client.auth.currentUser?.email ??
+                  'jack.loro@undiksha.ac.id',
+              name: 'Jack Rich Loro',
+              role: _overrideRole ?? 'owner',
             );
+
+        final activeRole = _overrideRole ?? p.role;
+        final isOwnerRole = activeRole == 'owner';
+        final isAdminRole = activeRole == 'admin';
 
         return Scaffold(
           backgroundColor: const Color(0xFFF7F9FA),
           appBar: AppBar(
-            title: Text('KosFinder (${p.role.toUpperCase()})'),
+            title: Text('KosFinder (${activeRole.toUpperCase()})'),
             actions: [
               IconButton(
                 tooltip: 'Refresh Data',
@@ -343,25 +349,51 @@ class _HomePageState extends State<HomePage> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: p.isOwner
+                              color: isOwnerRole
                                   ? Colors.orange.shade100
-                                  : p.isAdmin
+                                  : isAdminRole
                                       ? Colors.purple.shade100
                                       : Colors.blue.shade100,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              p.role.toUpperCase(),
+                              activeRole.toUpperCase(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
-                                color: p.isOwner
+                                color: isOwnerRole
                                   ? Colors.orange.shade800
-                                  : p.isAdmin
+                                  : isAdminRole
                                       ? Colors.purple.shade800
                                       : Colors.blue.shade800,
                               ),
                             ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 6,
+                        children: [
+                          const Text(
+                            'Simulasi Role (Praktik 4):',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                          ChoiceChip(
+                            label: const Text('Seeker', style: TextStyle(fontSize: 11)),
+                            selected: activeRole == 'seeker',
+                            onSelected: (_) => setState(() => _overrideRole = 'seeker'),
+                          ),
+                          ChoiceChip(
+                            label: const Text('Owner', style: TextStyle(fontSize: 11)),
+                            selected: activeRole == 'owner',
+                            onSelected: (_) => setState(() => _overrideRole = 'owner'),
+                          ),
+                          ChoiceChip(
+                            label: const Text('Admin', style: TextStyle(fontSize: 11)),
+                            selected: activeRole == 'admin',
+                            onSelected: (_) => setState(() => _overrideRole = 'admin'),
                           ),
                         ],
                       ),
@@ -480,7 +512,7 @@ class _HomePageState extends State<HomePage> {
                       title: Text('Daftar Kos (Semua Role)'),
                       subtitle: Text('Seeker, Owner, dan Admin dapat melihat kos'),
                     ),
-                    if (p.isOwner || p.isAdmin) ...[
+                    if (isOwnerRole || isAdminRole) ...[
                       const Divider(height: 1),
                       ListTile(
                         leading:
@@ -489,7 +521,7 @@ class _HomePageState extends State<HomePage> {
                         subtitle: const Text('Kelola kos milik Anda sendiri'),
                       ),
                     ],
-                    if (p.isAdmin) ...[
+                    if (isAdminRole) ...[
                       const Divider(height: 1),
                       const ListTile(
                         leading:
@@ -581,7 +613,7 @@ class _HomePageState extends State<HomePage> {
                             'Belum ada data kos di database Supabase.',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          if (p.isOwner || p.isAdmin) ...[
+                          if (isOwnerRole || isAdminRole) ...[
                             const SizedBox(height: 12),
                             ElevatedButton.icon(
                               onPressed: _showAddKosDialog,
@@ -729,7 +761,7 @@ class _HomePageState extends State<HomePage> {
 
           // Tombol Tambah Kos hanya untuk Owner / Admin (Praktik 4)
           floatingActionButton: RoleGuard(
-            role: p.role,
+            role: activeRole,
             allowed: const ['owner', 'admin'],
             child: FloatingActionButton.extended(
               onPressed: _showAddKosDialog,
