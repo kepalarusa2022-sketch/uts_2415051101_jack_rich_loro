@@ -16,7 +16,7 @@ Aplikasi mobile pencarian dan manajemen catatan kos berbasis Flutter yang terins
 | :--- | :--- |
 | **Nama Mahasiswa** | **Jack Rich Loro** |
 | **NIM** | **2415051101** |
-| **Kelas / Program Studi** | Pendidikan Teknik Informatika (PTI) / Ilmu Komputer |
+| **Kelas / Program Studi** | Pendidikan Teknik Informatika (PTI)  |
 | **Universitas** | Universitas Pendidikan Ganesha (Undiksha) |
 | **Mata Kuliah** | Pemrograman Mobile |
 | **Dosen Pengampu** | Dr. Ir. I Ketut Resika Arthana, S.T., M.Kom |

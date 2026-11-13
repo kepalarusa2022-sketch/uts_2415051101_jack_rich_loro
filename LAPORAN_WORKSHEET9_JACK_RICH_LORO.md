@@ -1,7 +1,7 @@
 # LAPORAN WORKSHEET 9
 ## Authentication, Authorization & Push Notifications
 **Mata Kuliah:** Pemrograman Mobile • Flutter • Supabase • Firebase Cloud Messaging  
-**Program Studi:** Pendidikan Teknik Informatika / S1 Ilmu Komputer  
+**Program Studi:** Pendidikan Teknik Informatika   
 **Universitas:** Universitas Pendidikan Ganesha (Undiksha)
 
 ---

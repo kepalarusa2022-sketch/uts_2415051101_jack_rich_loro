@@ -89,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   const Text(
-                    'Pendidikan Teknik Informatika / Ilmu Komputer\nUniversitas Pendidikan Ganesha (Undiksha)',
+                    'Pendidikan Teknik Informatika\nUniversitas Pendidikan Ganesha (Undiksha)',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white70, fontSize: 12),
                   ),
