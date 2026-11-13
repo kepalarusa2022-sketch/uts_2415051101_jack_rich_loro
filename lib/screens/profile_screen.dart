@@ -1,6 +1,9 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../pages/home_page.dart';
+import '../pages/login_page.dart';
 import '../providers/kos_provider.dart';
+import '../services/auth_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -228,6 +231,35 @@ class ProfileScreen extends StatelessWidget {
                             Text('Dikembangkan oleh Jack Rich Loro (NIM: 2415051101) untuk Project Ujian Tengah Semester Pemrograman Mobile.'),
                           ],
                         );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.security, color: Color(0xFF1BAA56)),
+                      title: const Text('Worksheet 9 Hub (Auth & FCM)', style: TextStyle(fontSize: 14)),
+                      subtitle: const Text('Status role, security test, dan token FCM', style: TextStyle(fontSize: 12)),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => const HomePage()),
+                          (route) => false,
+                        );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.logout, color: Colors.red),
+                      title: const Text('Keluar (Logout)', style: TextStyle(fontSize: 14, color: Colors.red)),
+                      subtitle: const Text('Hapus session dan kembali ke login', style: TextStyle(fontSize: 12)),
+                      trailing: const Icon(Icons.chevron_right, color: Colors.red),
+                      onTap: () async {
+                        await AuthService.instance.logout();
+                        if (context.mounted) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (_) => const LoginPage()),
+                            (route) => false,
+                          );
+                        }
                       },
                     ),
                   ],
