@@ -11,7 +11,7 @@
 | :--- | :--- |
 | **Nama Mahasiswa** | Jack Rich Loro |
 | **NIM** | 2415051101 |
-| **Kelas** | 3B |
+| **Kelas** | 5A |
 | **Dosen Pengampu** | Dr. Ir. I Ketut Resika Arthana, S.T., M.Kom |
 | **Teaching Assistant** | Made Yuda Sadewa, S.Pd. |
 | **Studi Kasus** | KosFinder (Aplikasi Pencarian & Pemasaran Kos) |
